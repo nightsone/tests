@@ -66,7 +66,6 @@ def get_staff():
             buzzword VARCHAR(255),
             brand VARCHAR(255),
             getdata_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ON CONFLICT (id) DO NOTHING
             )''')
     
     for item in data:
@@ -74,13 +73,15 @@ def get_staff():
             INSERT INTO cannabis (id, uid, strain, cannabinoid_abbreviation, terpene, medical_use, health_benefit, 
             type, buzzword, brand, getdata_time)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, DEFAULT)
+            ON CONFLICT (id) DO NOTHING
             ''', (item['id'], item['uid'], item['strain'], item['cannabinoid_abbreviation'], item['terpene'], item['medical_use'], item['health_benefit']
                   , item['type'], item['buzzword'], item['brand']))
     conn.commit()
     cursor.close()
     conn.close()
 
-
+# можно сразу проверить функцию
+# get_staff()
 # In[5]:
 
 
