@@ -45,7 +45,8 @@ def get_staff():
     data = response.json()
     
     conn = psycopg2.connect(
-        host='localhost',
+#        host='localhost', раскрыть для проверки функции
+        host='postgres', # это хост для нормальной отработки дага
         port='5432',
         database='airflow',
         user='airflow',
@@ -88,8 +89,7 @@ def get_staff():
 default_args = {
     'owner': 'aero',
     'start_date': datetime(2023, 7, 11),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
+    'end_date': datetime(2023, 8, 1)
 }
 
 dag = DAG(
@@ -104,11 +104,7 @@ get_staff_data = PythonOperator(
     dag=dag,
 )
 
-t1 = PythonOperator(task_id='start_task', python_callable=get_staff, dag=dag)
-
-
-# In[ ]:
-
+get_staff_data
 
 
 
